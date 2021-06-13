@@ -12,11 +12,11 @@ const context = canvas.getContext('2d');
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-
-  context.fillStyle = 'white';
-  context.fillRect(10, 20, 150, 50);
 });
 
-context.fillStyle = 'white';
-// draws shape
-context.fillRect(10, 20, 150, 50);
+context.fillStyle = 'blue';
+// needs to be called for single shapes that are comprised of multiple lines - shapes that aren't connected to previous lines
+context.beginPath();
+// circular path
+context.arc(100, 100, 50, 0, Math.PI * 2);
+context.fill();
