@@ -9,8 +9,7 @@ const context = canvas.getContext('2d');
   const particlesArray = [];
   let hue = 0;
 
-// listens to resize to recalculate the width and height of the canvas on different screen sizes to prevent
-// canvas distortion
+// listens to resize to recalculate the width and height of the canvas on different screen sizes to prevent canvas distortion
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -41,8 +40,6 @@ class Particle {
   constructor() {
     this.x = mouse.x;
     this.y = mouse.y;
-    // this.x = Math.random() * canvas.width;
-    // this.y = Math.random() * canvas.height;
     this.size = Math.random() * 15 + 1;
     this.speedX = Math.random() * 3 - 1.5;
     this.speedY = Math.random() * 3 - 1.5;
@@ -71,6 +68,27 @@ const handleParticles = () => {
   for (let i = 0; i < particlesArray.length; i++) {
     particlesArray[i].update();
     particlesArray[i].draw();
+    for (let j = i; j < particlesArray.length; j++ ) {
+      // Pythagorean theorem algorithm basis
+      const distanceParticleXAxis = particlesArray[i].x - particlesArray[j].x;
+      const distanceParticleYAxis = particlesArray[i].y - particlesArray[j].y;
+      // hypotenuse of the triangle representing the distance between two particles
+      const distanceBetweenParticles = Math.sqrt(
+        distanceParticleXAxis * distanceParticleXAxis + distanceParticleYAxis * distanceParticleYAxis
+      );
+
+      if (distanceBetweenParticles < 100) {
+        // draws the line connecting each particle to generate the constellation style
+        context.beginPath();
+        context.strokeStyle = particlesArray[i].color;
+        context.lineWidth = 0.2;
+        context.moveTo(particlesArray[i].x, particlesArray[i].y);
+        context.lineTo(particlesArray[j].x, particlesArray[j].y);
+        context.stroke();
+        context.closePath();
+      }
+    }
+
     if (particlesArray[i].size <= 0.3) {
       particlesArray.splice(i, 1);
       i--;
@@ -80,8 +98,6 @@ const handleParticles = () => {
 
 const animate = () => {
   context.clearRect(0, 0, canvas.width, canvas.height);
-  // context.fillStyle = 'rgba(0, 0, 0, 0.02)';
-  // context.fillRect(0, 0, canvas.width, canvas.height);
   handleParticles();
   hue+=2;
   requestAnimationFrame(animate);
