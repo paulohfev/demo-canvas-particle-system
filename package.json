@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "live-server": "^1.2.1"
+  },
+  "devDependencies": {
+    "glob-parent": ">=5.1.2"
   }
 }
