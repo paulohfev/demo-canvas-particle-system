@@ -1,3 +1,12 @@
+---
+name: Generic Template
+about: Describe this issue purpose here.
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 [Please describe the issue]
 
 **Steps To Reproduce**
